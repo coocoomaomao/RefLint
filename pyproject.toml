@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "reflint"
+version = "0.1.0"
+description = "Lint academic references before submission."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "coocoomaomao" }
+]
+keywords = [
+  "academic",
+  "references",
+  "bibtex",
+  "citations",
+  "research",
+  "publication",
+  "linter",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Text Processing",
+]
+dependencies = [
+  "bibtexparser>=2.0.1,<3",
+  "rich>=13.7",
+  "typer>=0.12",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2",
+]
+
+[project.scripts]
+reflint = "reflint.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/coocoomaomao/RefLint"
+Repository = "https://github.com/coocoomaomao/RefLint"
+Issues = "https://github.com/coocoomaomao/RefLint/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/reflint"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
