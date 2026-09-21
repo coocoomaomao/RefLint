@@ -10,7 +10,7 @@ Part of **喵造实验室 / MeowBuild Lab**.
 
 Reference lists accumulate small problems surprisingly easily: duplicated papers, malformed DOI values, incomplete BibTeX entries, suspicious years, or duplicate citation keys.
 
-RefLint turns the checks that can be verified deterministically into one command.
+RefLint turns local reference QA into one command, with optional DOI resolution and metadata verification when you explicitly enable network access.
 
 ## MVP checks
 
@@ -26,8 +26,32 @@ RefLint turns the checks that can be verified deterministically into one command
 - implausibly far-future years
 - recursive `.bib` folder scanning
 - CI-friendly exit codes and strict mode
+- optional DOI resolution through doi.org
+- optional CSL-JSON metadata comparison for title, year, and journal / venue
+- conservative network-failure handling so an outage is not misreported as a fake DOI
 
-RefLint does **not** claim that a syntactically valid DOI exists online or that metadata is factually correct. Network-backed verification is planned separately.
+## DOI verification
+
+Local checks are the default. To verify DOI resolution and compare available metadata, opt in with:
+
+~~~bash
+reflint check references.bib --online
+~~~
+
+Typical online findings include:
+
+~~~text
+info     DOI_RESOLVED
+warning  DOI_NOT_RESOLVED
+warning  DOI_TITLE_MISMATCH
+info     DOI_YEAR_MISMATCH
+info     DOI_CONTAINER_MISMATCH
+info     DOI_LOOKUP_UNAVAILABLE
+~~~
+
+A network failure is **not** treated as evidence that a DOI does not exist. RefLint reports lookup outages separately.
+
+The online verifier requests CSL-JSON metadata through the DOI resolver, which routes content-negotiated requests to the DOI registration infrastructure.
 
 ## Install from source
 
@@ -67,6 +91,12 @@ Fail CI when warnings exist:
 reflint check references.bib --strict
 ~~~
 
+Combine strict mode with online DOI verification:
+
+~~~bash
+reflint check references.bib --online --strict
+~~~
+
 ## Example
 
 ~~~text
@@ -103,8 +133,8 @@ The tool should not silently turn assumptions into facts.
 
 ## Planned next
 
-- DOI resolution and metadata comparison
-- Crossref/OpenAlex-backed verification with caching and rate-limit handling
+- caching and rate-limit handling for online verification
+- optional richer Crossref / DataCite metadata enrichment
 - retraction / correction warnings from authoritative sources
 - CSL / journal-style presets where rules can be sourced clearly
 - GitHub Actions annotations
