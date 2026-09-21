@@ -56,6 +56,7 @@ reflint = "reflint.cli:app"
 Homepage = "https://github.com/coocoomaomao/RefLint"
 Repository = "https://github.com/coocoomaomao/RefLint"
 Issues = "https://github.com/coocoomaomao/RefLint/issues"
+Changelog = "https://github.com/coocoomaomao/RefLint/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/reflint"]
