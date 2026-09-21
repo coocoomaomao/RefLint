@@ -8,6 +8,7 @@ from rich.table import Table
 
 from .checks import check_entries, collect_bib_files
 from .models import Severity
+from .online import verify_doi_metadata
 from .parser import parse_bibtex
 
 app = typer.Typer(
@@ -36,8 +37,21 @@ def check(
         "--strict",
         help="Exit with code 1 when warnings are present.",
     ),
+    online: bool = typer.Option(
+        False,
+        "--online",
+        help="Resolve valid DOI values and compare available DOI metadata.",
+    ),
+    timeout: float = typer.Option(
+        10.0,
+        "--timeout",
+        help="Per-request timeout in seconds for --online checks.",
+    ),
 ) -> None:
     """Check one .bib file or every .bib file in a directory."""
+    if timeout <= 0:
+        raise typer.BadParameter("--timeout must be greater than zero.")
+
     files = collect_bib_files(target)
     if not files:
         console.print("[yellow]No .bib files found.[/yellow]")
@@ -52,12 +66,15 @@ def check(
 
     error_count = 0
     warning_count = 0
+    info_count = 0
     entry_count = 0
 
     for path in files:
         entries, parse_findings = parse_bibtex(path)
         entry_count += len(entries)
         findings = [*parse_findings, *check_entries(path, entries)]
+        if online:
+            findings.extend(verify_doi_metadata(path, entries, timeout=timeout))
 
         if not findings:
             table.add_row(str(path), "—", "pass", "OK", "No findings.")
@@ -68,6 +85,8 @@ def check(
                 error_count += 1
             elif finding.severity is Severity.WARNING:
                 warning_count += 1
+            elif finding.severity is Severity.INFO:
+                info_count += 1
 
             table.add_row(
                 str(finding.path),
@@ -80,7 +99,8 @@ def check(
     console.print(table)
     console.print(
         f"Checked {len(files)} file(s), {entry_count} reference(s): "
-        f"{error_count} error(s), {warning_count} warning(s)."
+        f"{error_count} error(s), {warning_count} warning(s), "
+        f"{info_count} info."
     )
 
     if error_count:
