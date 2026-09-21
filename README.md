@@ -1,5 +1,13 @@
 # RefLint 🐈‍⬛📚
 
+<p>
+  <a href="https://pypi.org/project/reflint/"><img src="https://img.shields.io/pypi/v/reflint" alt="PyPI"></a>
+  <a href="https://github.com/coocoomaomao/RefLint/releases/tag/v0.1.0"><img src="https://img.shields.io/github/v/release/coocoomaomao/RefLint" alt="GitHub release"></a>
+  <a href="https://github.com/coocoomaomao/RefLint/actions/workflows/ci.yml"><img src="https://github.com/coocoomaomao/RefLint/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/pypi/pyversions/reflint" alt="Python versions">
+  <img src="https://img.shields.io/github/license/coocoomaomao/RefLint" alt="MIT License">
+</p>
+
 > **ESLint for academic references.**
 
 **RefLint** is an open-source linter for academic reference libraries. It helps researchers catch deterministic BibTeX quality problems before submission.
@@ -53,9 +61,23 @@ A network failure is **not** treated as evidence that a DOI does not exist. RefL
 
 The online verifier requests CSL-JSON metadata through the DOI resolver, which routes content-negotiated requests to the DOI registration infrastructure.
 
-## Install from source
+## Install
 
 Requires Python 3.10+.
+
+### PyPI
+
+~~~bash
+pip install reflint
+~~~
+
+Verify the installation:
+
+~~~bash
+reflint --help
+~~~
+
+### From source
 
 ~~~bash
 git clone https://github.com/coocoomaomao/RefLint.git
@@ -142,8 +164,10 @@ The tool should not silently turn assumptions into facts.
 
 ## Release
 
-RefLint v0.1.0 is being prepared for its first public release.
+The first public release, **RefLint v0.1.0**, is now available.
 
+- [PyPI package](https://pypi.org/project/reflint/)
+- [GitHub release](https://github.com/coocoomaomao/RefLint/releases/tag/v0.1.0)
 - [v0.1.0 release notes](docs/releases/v0.1.0.md)
 - [Publishing guide](docs/PUBLISHING.md)
 
