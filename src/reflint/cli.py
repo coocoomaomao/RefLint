@@ -18,6 +18,11 @@ app = typer.Typer(
 console = Console()
 
 
+@app.callback()
+def main() -> None:
+    """RefLint command group."""
+
+
 @app.command()
 def check(
     target: Path = typer.Argument(
