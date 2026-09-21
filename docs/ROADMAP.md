@@ -1,6 +1,6 @@
 # Roadmap
 
-## v0.1 — local deterministic BibTeX QA
+## v0.1 — local QA + first online DOI verification
 
 - parsing / structural errors
 - duplicate keys and fields
@@ -9,14 +9,17 @@
 - DOI syntax
 - year sanity
 - CLI + CI
+- opt-in DOI resolution through doi.org
+- CSL-JSON title / year / venue comparison
+- explicit timeout and conservative network-failure behavior
 
-## v0.2 — network verification
+## v0.2 — network verification hardening
 
-- resolve DOI values
-- compare title / year / venue metadata against authoritative APIs
-- cache results locally
-- explicit offline mode
-- rate-limit and timeout behavior
+- cache DOI metadata locally
+- registry-aware enrichment where useful
+- rate-limit handling
+- batch performance improvements
+- configurable online verification policy
 
 ## v0.3 — publication workflow
 
