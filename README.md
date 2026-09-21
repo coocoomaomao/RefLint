@@ -140,6 +140,13 @@ The tool should not silently turn assumptions into facts.
 - GitHub Actions annotations
 - JSON output for editors and other tools
 
+## Release
+
+RefLint v0.1.0 is being prepared for its first public release.
+
+- [v0.1.0 release notes](docs/releases/v0.1.0.md)
+- [Publishing guide](docs/PUBLISHING.md)
+
 ## License
 
 MIT
